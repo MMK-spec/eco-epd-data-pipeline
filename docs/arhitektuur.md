@@ -16,16 +16,16 @@ Esialgne projekti fookus armatuurterasel.
 
 | Allikas | Tüüp | Ajas muutuv? | Roll |
 |---------|------|--------------|------|
-| ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel | Peamine andmeallikas |
-| [Nimi] | Staatiline dimensioonitabel | Ei, staatiline | [Milleks kasutatakse?] |
+| ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel. Kontroll iga päev | Peamine andmeallikas |
+| [Nimi] | Staatiline dimensioonitabel | Ei, staatiline | Materjalide kontrollide teostamine kategooriate kaupa |
 
 ## Andmevoog
 
 ```mermaid
 flowchart LR
-    source[ECO Portal API]  --> ingest[Sissevõtt]
-    ingest --> staging[(staging)]
-    staging --> transform[Transformatsioon]
+    source[ECO Portal API]  --> ingest[Python ingest]
+    ingest --> staging[(staging.epd_daily_raw)]
+    staging --> transform[SQL transformatsioon]
     transform --> mart[(mart)]
     mart --> dashboard[Näidikulaud]
     mart --> quality[Andmekvaliteedi testid]

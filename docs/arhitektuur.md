@@ -26,8 +26,8 @@ flowchart LR
     source[ECO Portal API]  --> ingest[Python ingest]
     ingest --> staging[(staging.epd_daily_raw)]
     staging --> transform[SQL transformatsioon]
-    transform --> mart[(mart)]
-    mart --> dashboard[Näidikulaud]
+    transform --> mart[(PostgreSQL mart)]
+    mart --> dashboard[ Streamlit näidikulaud]
     mart --> quality[Andmekvaliteedi testid]
     scheduler[Cron Scheduler] --> ingest
 ```

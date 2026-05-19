@@ -17,7 +17,7 @@ Esialgne projekti fookus armatuurterasel.
 | Allikas | Tüüp | Ajas muutuv? | Roll |
 |---------|------|--------------|------|
 | ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel | Peamine andmeallikas |
-| [Nimi] | [seed / dim-tabel] | Ei, staatiline | [Milleks kasutatakse?] |
+| [Nimi] | Staatiline dimensioonitabel | Ei, staatiline | [Milleks kasutatakse?] |
 
 ## Andmevoog
 

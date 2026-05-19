@@ -58,7 +58,7 @@ Iga pipeline'i käivitus salvestab API-st laaditud andmed staging'u kihti. Inter
 | Risk | Mõju | Maandus |
 |------|------|---------|
 | Sobiva tootekategooria valimine võib osutuda keeruliseks | Liiga väike või metodoloogiliselt ebaühtlane EPD valim võib piirata analüüsi kvaliteeti | Enne lõpliku skoobi valimist hinnatakse eri tootekategooriate EPD-de hulka ja andmete võrreldavust |
-| [Risk 2] | [Mis juhtub?] | [Kuidas maandad?] |
+| Andmete kvaliteet riikide kaupa on erinev | Andmed ei ole võrreldavad | Kvaliteedikontrollid |
 | [Risk 3] | [Mis juhtub?] | [Kuidas maandad?] |
 
 ## Privaatsus ja turve

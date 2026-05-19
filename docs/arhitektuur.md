@@ -29,7 +29,7 @@ flowchart LR
     transform --> mart[(mart)]
     mart --> dashboard[Näidikulaud]
     mart --> quality[Andmekvaliteedi testid]
-    scheduler[Scheduler] --> ingest
+    scheduler[Cron Scheduler] --> ingest
 ```
 
 > Täpsusta diagrammi vastavalt oma projektile — lisa rohkem andmeallikaid, mudeleid või teenuseid.

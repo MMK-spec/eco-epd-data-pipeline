@@ -23,7 +23,7 @@ Esialgne projekti fookus armatuurterasel.
 
 ```mermaid
 flowchart LR
-    source[Andmeallikas] --> ingest[Sissevõtt]
+    source ECO Portal API --> ingest[Sissevõtt]
     ingest --> staging[(staging)]
     staging --> transform[Transformatsioon]
     transform --> mart[(mart)]

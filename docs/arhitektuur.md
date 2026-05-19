@@ -16,7 +16,7 @@
 
 | Allikas | Tüüp | Ajas muutuv? | Roll |
 |---------|------|--------------|------|
-| [Nimi] | [API / CSV / DB] | Jah, [iga X tundi / päeva] | [Milleks kasutatakse?] |
+| ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel | Peamine andmeallikas |
 | [Nimi] | [seed / dim-tabel] | Ei, staatiline | [Milleks kasutatakse?] |
 
 ## Andmevoog
@@ -38,14 +38,17 @@ flowchart LR
 
 | Kiht | Roll |
 |------|------|
-| `staging` | Hoiab allika andmeid töötlemata kujul. |
-| `mart` | Hoiab transformeeritud ja ärilogikat sisaldavaid tabeleid. |
+| `staging` | ECO Platform API-st saadud algandmete salvestamine muutmata kujul |
+| `intermediate` | Andmete puhastamine, normaliseerimine ja analüüsiks ettevalmistamine |
+| `marts` | KPI-d, agregatsioonid ja dashboardi jaoks optimeeritud lõppandmed |
+
+Iga pipeline'i käivitus salvestab API-st laaditud andmed staging'u kihti. Intermediate'i kihis tehakse andmete puhastamine ja transformatsioonid. Martsi kiht sisaldab dashboardi ja analüüsi jaoks optimeeritud lõpptabeleid.
 
 ## Tööjaotus
 
 | Roll | Vastutus | Täitja |
 |------|----------|--------|
-| Andmeallika omanik | Kirjutab sissevõtu loogika, hoiab API-t töös | [Nimi] |
+| Andmeallika omanik | Kirjutab sissevõtu loogika, hoiab API-t töös | Mari Kirss |
 | Transformatsioonide omanik | Kirjutab mart kihi mudelid ja mõõdikute arvutuse | [Nimi] |
 | Kvaliteedi omanik | Kirjutab testid ja vaatab läbi ebaõnnestunud kontrollid | [Nimi] |
 | Näidikulaua omanik | Ehitab näidikulaua ja seob selle äriküsimusega | [Nimi] |
@@ -54,11 +57,9 @@ flowchart LR
 
 | Risk | Mõju | Maandus |
 |------|------|---------|
-| [Risk 1 — näiteks: API ei vasta] | [Mis juhtub?] | [Kuidas maandad?] |
+| Sobiva tootekategooria valimine võib osutuda keeruliseks | Liiga väike või metodoloogiliselt ebaühtlane EPD valim võib piirata analüüsi kvaliteeti | Enne lõpliku skoobi valimist hinnatakse eri tootekategooriate EPD-de hulka ja andmete võrreldavust |
 | [Risk 2] | [Mis juhtub?] | [Kuidas maandad?] |
 | [Risk 3] | [Mis juhtub?] | [Kuidas maandad?] |
-
-## Privaatsus ja turve
 
 ## Privaatsus ja turve
 

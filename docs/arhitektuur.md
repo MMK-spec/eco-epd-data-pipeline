@@ -60,4 +60,8 @@ flowchart LR
 
 ## Privaatsus ja turve
 
-[Kirjelda, millised isiku- või tundlikud andmed teie projektis esinevad (kui üldse) ja kuidas neid kaitsete. Isikuandmed peavad olema anonümiseeritud. Andmebaasi paroolid peavad tulema `.env` failist.]
+## Privaatsus ja turve
+
+Projekt kasutab ECO Portali EPD andmeid, millele ligipääs toimub API kaudu vastavalt ECO Platformi kasutustingimustele. EPD dokumendid ise on avalikud dokumendid, mis sisaldavad peamiselt tootepõhist ja ettevõtetega seotud tehnilist infot ega sisalda füüsiliste isikute tundlikke isikuandmeid.
+API võtmeid, andmebaasi paroole ega muid ligipääsuandmeid ei salvestata GitHubi reposse. Need hoitakse lokaalses `.env` failis, mis on lisatud `.gitignore` faili ning ei ole teistele kasutajatele avalikult kättesaadavad. Repos kasutatakse ainult `.env.example` faili näidisväljadega.
+Ligipääs projektile toimub privaatse GitHubi repository kaudu ning ainult projekti liikmetele ja kursuse juhendajatele antakse ligipääs repo sisule.

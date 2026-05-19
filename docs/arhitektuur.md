@@ -5,13 +5,12 @@
 ## Äriküsimus
 
 Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku jalajälje väärtused erinevate toodete ja tootjate vahel ning kas andmed on piisavalt täielikud ja võrreldavad automaatseks analüüsiks?
-
+Esialgne projekti fookus armatuurterasel.
 
 ## Mõõdikud
 
-1. [Esimene mõõdik — kirjelda, mida arvutate ja kuidas]
-2. [Teine mõõdik]
-3. [Kolmas mõõdik — vabatahtlik]
+1. Erinevate toodete või tootjate GWP-täieliku, GWP-fossiilse, GWP-biogeense (süsiniku jalajälje) väärtuste võrdlus ja keskmine.
+2. Kui palju esineb puudulikke, aegunud või ebaloogilisi EPD andmeid. Vigaste kirjete arv kogu andmebaasist - GWP-total kontroll, GWP väärtuste loogilisuse kontroll.
 
 ## Andmeallikad
 

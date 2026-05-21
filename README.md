@@ -26,12 +26,16 @@ Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku 
 
 ```mermaid
 flowchart LR
-    source[Andmeallikas] --> ingest[Sissevõtt]
-    ingest --> staging[(staging)]
-    staging --> transform[Transformatsioon]
-    transform --> mart[(mart)]
-    mart --> dashboard[Näidikulaud]
+    source[ECO Portal API]  --> ingest[Python ingest]
+    ingest --> staging[(staging.epd_daily_raw)]
+    staging --> transform[SQL transformatsioon]
+    transform --> mart[(PostgreSQL mart)]
+    mart --> dashboard[ Streamlit näidikulaud]
+    mart --> quality[Andmekvaliteedi testid]
+    scheduler[Cron Scheduler] --> ingest
 ```
+
+
 
 Täpsem kirjeldus: [`docs/arhitektuur.md`](docs/arhitektuur.md)
 

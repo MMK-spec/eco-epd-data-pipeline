@@ -13,9 +13,9 @@ Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku 
 
 | Nõue | Kuidas projekt seda täidab |
 |---------|------|
-| Selge äriküsimus | [Info] |
-| Ajas muutuv andmeallikas | [Info] |
-| Automatiseeritud sissevõtt | [Info] |
+| Selge äriküsimus | Keskkonnadeklaratsioonide süsinikjalajälje info usaldusväärsus |
+| Ajas muutuv andmeallikas | ECO EPD API uueneb tootjate deklaratsioonide esitamisel |
+| Automatiseeritud sissevõtt | scheduler konteiner käivitab töövoo croni ajakava järgi korra päevas. |
 | Vähemalt üks transformatsioon | [Info] |
 | Andmekvaliteedi testid | [Info] |
 | Näidikulaud | Streamlit rakendus näitab |

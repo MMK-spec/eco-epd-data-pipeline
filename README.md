@@ -14,7 +14,7 @@ Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku 
 | Nõue | Kuidas projekt seda täidab |
 |---------|------|
 | Selge äriküsimus | Keskkonnadeklaratsioonide süsinikjalajälje info usaldusväärsus |
-| Ajas muutuv andmeallikas | ECO EPD API uueneb tootjate deklaratsioonide esitamisel |
+| Ajas muutuv andmeallikas | ECO Portal API uueneb tootjate deklaratsioonide esitamisel |
 | Automatiseeritud sissevõtt | scheduler konteiner käivitab töövoo croni ajakava järgi korra päevas. |
 | Vähemalt üks transformatsioon | [Info] |
 | Andmekvaliteedi testid | [Info] |

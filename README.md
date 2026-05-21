@@ -136,5 +136,5 @@ Testide tulemused: [kuhu salvestatakse / kuidas vaadata]
 
 | Nimi | Roll |
 |------|------|
-| Mari Kirss | [Roll] |
-| Helene Abel | [Roll] |
+| Mari Kirss | Andmeallika omanik, kvaliteedi omanik |
+| Helene Abel | Tranformatsioonide omanik, näidikulaua omanik |

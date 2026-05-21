@@ -1,11 +1,9 @@
 # Edenemisraport
 
-> **Juhend:** See fail on projektitöö teise nädala väljund. Uuenda lühidalt iga esitamise eel. Kustuta see juhendrida.
-
 ## Mis on valmis
 
-- [ ] Docker Compose käivitab kõik teenused
-- [ ] Andmeid saadakse allikast kätte
+- [ ] Docker Compose käivitab PostgreSQL-i, töövoo konteineri, scheduleri ja näidikulaua
+- [ ] ECO EPD API-st saab kätte EPD andmed toodete kaupa
 - [ ] Andmed laetakse `staging` kihti
 - [ ] Vähemalt üks transformatsioon toimib
 - [ ] Vähemalt üks näidikulaud on nähtaval

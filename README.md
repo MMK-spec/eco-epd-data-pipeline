@@ -1,16 +1,26 @@
 # Ehitusmaterjalide keskkonnadeklaratsioonide analüüs
 
-> **Juhend:** Asenda kõik nurksulgudes vormid oma sisuga enne esitamist. Kustuta see juhendrida.
-
 ## Äriküsimus
 
-[Kirjelda ühe-kahe lausega, millise andmetega seotud probleemi te lahendate ja kes sellest kasu saab.]
+Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku jalajälje väärtused erinevate toodete ja tootjate vahel ning kas andmed on piisavalt täielikud ja võrreldavad automaatseks analüüsiks? Esialgne projekti fookus armatuurterasel.
 
 **Mõõdikud:**
 
-1. [Esimene KPI või mõõdik — näiteks: päevane müük poe kohta]
-2. [Teine KPI või mõõdik]
-3. [Kolmas KPI või mõõdik — vabatahtlik]
+1. Erinevate toodete või tootjate GWP-täieliku, GWP-fossiilse, GWP-biogeense (süsiniku jalajälje) väärtuste võrdlus ja keskmine.
+2. Kui palju esineb puudulikke või ebaloogilisi EPD andmeid. Vigaste kirjete arv kogu andmebaasist - GWP-total kontroll, GWP väärtuste loogilisuse kontroll.
+
+## Kuidas projekt täidab nõuded
+
+| Nõue | Kuidas projekt seda täidab |
+|---------|------|
+| Selge äriküsimus | [Info] |
+| Ajas muutuv andmeallikas | [Info] |
+| Automatiseeritud sissevõtt | [Info] |
+| Vähemalt üks transformatsioon | [Info] |
+| Andmekvaliteedi testid | [Info] |
+| Näidikulaud | Streamlit rakendus näitab |
+| Saladused .env failis | Ühenduse seaded tulevad .env failist. Repos on ainult .env.example |
+| README | Fail kirjeldab äriküsimust, arhitektuuri ja käivitamist |
 
 ## Arhitektuur
 

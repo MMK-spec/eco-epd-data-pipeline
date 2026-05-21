@@ -30,7 +30,7 @@ flowchart LR
     ingest --> staging[(staging.epd_daily_raw)]
     staging --> transform[SQL transformatsioon]
     transform --> mart[(PostgreSQL mart)]
-    mart --> dashboard[ Streamlit näidikulaud]
+    mart --> dashboard[ Superset näidikulaud]
     mart --> quality[Andmekvaliteedi testid]
     scheduler[Cron Scheduler] --> ingest
 ```
@@ -53,7 +53,7 @@ Täpsem kirjeldus: [`docs/arhitektuur.md`](docs/arhitektuur.md)
 | Sissevõtt | Python |
 | Transformatsioon | SQL |
 | Andmehoidla | PostgreSQL |
-| Näidikulaud | [Superset / Streamlit / muu] |
+| Näidikulaud | Superset |
 | Orkestreerimine | cron |
 
 ## Käivitamine

@@ -17,7 +17,6 @@ Esialgne projekti fookus armatuurterasel.
 | Allikas | Tüüp | Ajas muutuv? | Roll |
 |---------|------|--------------|------|
 | ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel. Kontroll iga päev | Peamine andmeallikas |
-| [Nimi] | Staatiline dimensioonitabel | Ei, staatiline | Materjalide kontrollide teostamine kategooriate kaupa |
 
 ## Andmevoog
 

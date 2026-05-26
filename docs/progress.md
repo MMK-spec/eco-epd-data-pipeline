@@ -13,14 +13,14 @@
 
 ## Järgmised sammud
 
-- [Esimene tegevus, mis ees ootab]
+- Andmete kogumise skriptide täiustamine, et andmebaasist saaks kätte võimalikult palju soovitud andmevälju
 - [Teine tegevus]
 - [Kolmas tegevus]
 
 ## Mis takistab
 
 - Probleem 1 — ECO Portali andmebaas on väga keerulise struktuuriga ja andmed võivad olla esitatud eri failiformaatides. Kõigi soovitud andmeväljade kättesaamine on keerukas. 
-- [Probleem 2 — või: "Praegu pole blokeerivaid probleeme"]
+- Probleem 2 — ECO Portali andmebaas kogub omakorda infot teistest andmebaasidest. Kui mõni neist ei ole kättesaadav, pole tulemused idempotentsed.
 
 ## Kontrollpunkt
 

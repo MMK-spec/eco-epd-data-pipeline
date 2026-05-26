@@ -19,7 +19,7 @@
 
 ## Mis takistab
 
-- [Probleem 1 — näiteks: API tagastab vigaseid väärtusi ühes linnas]
+- Probleem 1 — ECO Portali andmebaas on väga keerulise struktuuriga ja andmed võivad olla esitatud eri failiformaatides. Kõigi soovitud andmeväljade kättesaamine on keerukas. 
 - [Probleem 2 — või: "Praegu pole blokeerivaid probleeme"]
 
 ## Kontrollpunkt

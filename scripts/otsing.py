@@ -405,6 +405,10 @@ df = pd.DataFrame(rows)  # Muudab read pandas tabeliks
 
 # tulemuste print terminalis: print(df.to_string(index=False))  # Kuvab tulemuse terminalis
 
+# CSV fail salvestatakse projekti kausta
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FILE = os.path.join(BASE_DIR, "epd_selected_fields.csv")
+
 
 # Salvestab tulemuse CSV failina, eraldajaks semikoolon
 df.to_csv(

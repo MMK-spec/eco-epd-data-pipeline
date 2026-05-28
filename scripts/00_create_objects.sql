@@ -72,6 +72,8 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
     gwp_fossil_a2 numeric(18, 6),
     gwp_luluc_a2 numeric(18, 6),
 
+    gwp_control numeric(18, 6),
+
     fetched_at timestamptz NOT NULL,
     source_url text NOT NULL,
 

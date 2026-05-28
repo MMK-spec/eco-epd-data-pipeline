@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS staging.eco_epd_raw (
 
     ref_quantity numeric(18, 6),
     ref_unit text,
+    mass_kg numeric(18, 6),
 
     carbon_content_biogenic_kg numeric(18, 6),
     carbon_content_biogenic_packaging_kg numeric(18, 6),
@@ -66,6 +67,10 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
     declaration_owner text,
 
     publication_date date,
+
+    ref_quantity numeric(18, 6),
+    ref_unit text,
+    mass_kg numeric(18, 6),
 
     gwp_total_a2 numeric(18, 6),
     gwp_biogenic_a2 numeric(18, 6),

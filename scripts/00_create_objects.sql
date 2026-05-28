@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS staging.eco_epd_raw (
     uuid text NOT NULL,
     version text,
 
+    location_code text,
+
     name_no text,
     name_en text,
     name_da text,

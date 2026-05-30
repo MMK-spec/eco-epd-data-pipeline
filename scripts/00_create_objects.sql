@@ -68,14 +68,13 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
 
     publication_date date,
 
-    ref_quantity numeric(18, 6),
+    quantity numeric(18, 6),
     ref_unit text,
-    mass_kg numeric(18, 6),
 
-    gwp_total_a2 numeric(18, 6),
-    gwp_biogenic_a2 numeric(18, 6),
-    gwp_fossil_a2 numeric(18, 6),
-    gwp_luluc_a2 numeric(18, 6),
+    gwp_total_a1a3 numeric(18, 6),
+    gwp_biogenic_a1a3 numeric(18, 6),
+    gwp_fossil_a1a3 numeric(18, 6),
+    gwp_luluc_a1a3 numeric(18, 6),
 
     gwp_control numeric(18, 6),
 

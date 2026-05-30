@@ -65,13 +65,17 @@ cd <projekti-kaust>
 
 # 2. Kopeeri keskkonnamuutujad
 cp .env.example .env
-# Muuda .env failis paroolid ja muud seaded vastavalt vajadusele
+# Muuda .env failis TOKEN ja asenda SUPERSET_SECRET_KEY väärtus:
+python -c "import secrets; print(secrets.token_hex(32))"
 
 # 3. Käivita teenused
 docker compose up -d --build
 
 # 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
-# docker compose exec pipeline python scripts/run_pipeline.py run-all
+# docker compose run --rm pipeline python scripts/run_pipeline.py rebar --init-db -y
+
+# 5. Ava Superset
+#    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)
 ```
 
 Airflow (kui kasutatakse): http://localhost:8080 (kasutaja: airflow / parool: airflow)

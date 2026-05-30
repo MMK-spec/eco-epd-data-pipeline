@@ -72,7 +72,7 @@ python -c "import secrets; print(secrets.token_hex(32))"
 docker compose up -d --build
 
 # 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
-# docker compose run --rm pipeline python scripts/run_pipeline.py rebar --init-db -y
+docker compose run --rm pipeline python scripts/run_pipeline.py rebar --init-db -y
 
 # 5. Ava Superset
 #    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)

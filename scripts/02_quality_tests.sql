@@ -14,8 +14,8 @@ test_cases AS (
         CASE
             WHEN EXISTS (
                 SELECT 1
-                FROM staging.eco_epd_raw AS w
-                INNER JOIN latest_run AS r ON w.run_id = r.run_id
+                FROM staging.eco_epd_raw AS e
+                INNER JOIN latest_run AS r ON e.run_id = r.run_id
             )
                 THEN 0
             ELSE 1

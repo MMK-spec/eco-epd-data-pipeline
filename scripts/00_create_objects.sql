@@ -91,3 +91,22 @@ CREATE TABLE IF NOT EXISTS quality.test_results (
     failed_rows integer NOT NULL,
     message text NOT NULL
 );
+
+CREATE OR REPLACE VIEW mart.latest_pipeline_run AS
+SELECT
+    run_id,
+    fetched_at,
+    source_name,
+    forecast_days,
+    status,
+    message
+FROM staging.pipeline_runs
+WHERE status = 'success'
+ORDER BY fetched_at DESC
+LIMIT 1;
+
+CREATE OR REPLACE VIEW mart.latest_eco_epd AS
+SELECT e.*
+FROM mart.eco_epd AS e
+INNER JOIN mart.latest_pipeline_run AS r
+    ON e.run_id = r.run_id;

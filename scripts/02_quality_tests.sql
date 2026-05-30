@@ -15,12 +15,29 @@ test_cases AS (
             WHEN EXISTS (
                 SELECT 1
                 FROM staging.eco_epd_raw AS e
-                INNER JOIN latest_run AS r ON e.run_id = r.run_id
+                INNER JOIN latest_run AS r
+                    ON e.run_id = r.run_id
             )
                 THEN 0
             ELSE 1
         END AS failed_rows,
-        'Viimasel edukal laadimisel peab olema vähemalt üks rida.' AS message
+        'Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.' AS message
+
+    UNION ALL
+
+    SELECT
+        'eco_epd_mart_has_rows' AS test_name,
+        CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM mart.eco_epd AS e
+                INNER JOIN latest_run AS r
+                    ON e.run_id = r.run_id
+            )
+                THEN 0
+            ELSE 1
+        END AS failed_rows,
+        'Viimasel edukal laadimisel peab olema vähemalt üks mart-rida.' AS message
 
     UNION ALL
 
@@ -28,40 +45,40 @@ test_cases AS (
         'eco_epd_no_empty_rows' AS test_name,
         COUNT(*)::integer AS failed_rows,
         'EPD kirjetel ei tohi puududa põhiandmed.' AS message
-    FROM mart.eco_epd
+    FROM mart.eco_epd AS e
     INNER JOIN latest_run AS r
-       ON e.run_id = r.run_id
-    WHERE uuid IS NULL
-       OR quantity IS NULL
-       OR ref_unit IS NULL
-       OR gwp_total_a1a3 IS NULL
-       OR gwp_biogenic_a1a3 IS NULL
-       OR gwp_control IS NULL
-    
+        ON e.run_id = r.run_id
+    WHERE e.uuid IS NULL
+       OR e.quantity IS NULL
+       OR e.ref_unit IS NULL
+       OR e.gwp_total_a1a3 IS NULL
+       OR e.gwp_biogenic_a1a3 IS NULL
+       OR e.gwp_control IS NULL
+
     UNION ALL
-    
+
     SELECT
         'eco_epd_gwp_control_within_tolerance' AS test_name,
         COUNT(*)::integer AS failed_rows,
         'GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust.' AS message
-    FROM mart.eco_epd
+    FROM mart.eco_epd AS e
     INNER JOIN latest_run AS r
-      ON e.run_id = r.run_id
-    WHERE gwp_control <> 0
-    WHERE gwp_total_a1a3 IS NOT NULL
-      AND gwp_control <> 0
-      AND ABS(gwp_control) > GREATEST(ABS(gwp_total_a1a3) * 0.02, 0.0001)
+        ON e.run_id = r.run_id
+    WHERE e.gwp_total_a1a3 IS NOT NULL
+      AND e.gwp_control IS NOT NULL
+      AND e.gwp_control <> 0
+      AND ABS(e.gwp_control) > GREATEST(ABS(e.gwp_total_a1a3) * 0.02, 0.0001)
 
     UNION ALL
-  
+
     SELECT
         'eco_epd_biogenic_not_negative' AS test_name,
         COUNT(*)::integer AS failed_rows,
         'Biogeenne GWP ei tohi olla negatiivne.' AS message
-    FROM mart.eco_epd
+    FROM mart.eco_epd AS e
     INNER JOIN latest_run AS r
         ON e.run_id = r.run_id
-    WHERE gwp_biogenic_a1a3 < 0
+    WHERE e.gwp_biogenic_a1a3 < 0
 
 )
 INSERT INTO quality.test_results (

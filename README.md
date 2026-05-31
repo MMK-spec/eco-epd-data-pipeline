@@ -88,7 +88,9 @@ docker compose up -d --build
 
 # 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
 docker compose run --rm pipeline python scripts/run_pipeline.py rebar --init-db -y
-# Oodatav tulemus: Märksõna rebar kohta 175 vastet, genereeriti .csv ja tabeli read, toimus transformatsioon ja 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
+# Oodatav tulemus: Märksõna rebar kohta 175 vastet,
+## genereeriti .csv ja tabeli read, toimus transformatsioon
+## 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
 
 # 5. Ava Superset
 #    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)

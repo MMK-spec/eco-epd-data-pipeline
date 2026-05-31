@@ -37,7 +37,10 @@ flowchart LR
     scheduler[Cron Scheduler] --> ingest
 ```
 
-
+Andmekihid:
+- staging hoiab API-st saadud lähtekuju;
+- mart hoiab korrastatud keskkonnadeklaratsiooni andmeid;
+- quality hoiab andmekvaliteedi testide tulemusi
 
 Täpsem kirjeldus: [`docs/arhitektuur.md`](docs/arhitektuur.md)
 

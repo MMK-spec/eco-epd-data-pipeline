@@ -18,9 +18,9 @@ Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku 
 | Selge äriküsimus | Keskkonnadeklaratsioonide süsinikjalajälje info usaldusväärsus |
 | Ajas muutuv andmeallikas | ECO Portal API uueneb tootjate deklaratsioonide esitamisel |
 | Automatiseeritud sissevõtt | scheduler konteiner käivitab töövoo croni ajakava järgi korra päevas. |
-| Vähemalt üks transformatsioon | [Info] |
-| Andmekvaliteedi testid | [Info] |
-| Näidikulaud | Streamlit rakendus näitab |
+| Vähemalt üks transformatsioon | scripts/01_transform.sql loob staging andmetest mart kihi tabelid |
+| Andmekvaliteedi testid | scripts/02_quality_tests.sql käivitab andmete ja jalajälje näitajate kontrollid |
+| Näidikulaud | Superset rakendus näitab... |
 | Saladused .env failis | Ühenduse seaded tulevad .env failist. Repos on ainult .env.example |
 | README | Fail kirjeldab äriküsimust, arhitektuuri ja käivitamist |
 

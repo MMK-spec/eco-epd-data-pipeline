@@ -2,20 +2,26 @@
 
 ## Mis on valmis
 
-- [ ] Docker Compose käivitab PostgreSQL-i, töövoo konteineri, scheduleri ja näidikulaua
-- [ ] ECO EPD API-st saab kätte EPD andmed toodete kaupa
-- [ ] Andmed laetakse `staging` kihti
-- [ ] Vähemalt üks transformatsioon toimib
-- [ ] Vähemalt üks näidikulaud on nähtaval
-- [ ] Vähemalt üks andmekvaliteedi test läbib
+- [x] Docker Compose käivitab PostgreSQL-i, töövoo konteineri, scheduleri ja näidikulaua
+- [x] ECO EPD API-st saab kätte EPD andmed toodete kaupa
+- [x] Andmed laetakse `staging` kihti
+- [x] Vähemalt üks transformatsioon toimib
+- [x] Vähemalt üks näidikulaud on nähtaval
+- [x] Vähemalt üks andmekvaliteedi test läbib
 
-[Täpsusta lühidalt, mis täpselt valmis on]
+- Docker Compose käivitab PostgreSQL-i, töövoo konteineri, scheduleri ja Superset näidikulaua;
+- Andmed päritakse ECO Portal API kaudu ja salvestatakse .csv faili ja `staging` kihti;
+- `01_transform.sql` muundab andmed `staging` kihist `mart` kihti;
+- `02_quality_tests` kontrollib andmete täielikkust ja sobivust;
+- `run_pypeline.py` orkestreerib käivitust;
+- Näidikulaud kuvab kirjete arvu ja keskmisi jalajälje väärtusi dimensioonide (riik, ühik) kaupa;
 
 ## Järgmised sammud
 
-- Andmete kogumise skriptide täiustamine, et andmebaasist saaks kätte võimalikult palju soovitud andmevälju
-- [Teine tegevus]
-- [Kolmas tegevus]
+- Scheduleri lisamine projektile;
+- Andmete kogumise skriptide täiustamine, et andmebaasist saaks kätte võimalikult palju soovitud andmevälju;
+- Tranformatsiooni muudatused andmekvaliteedi tõstmiseks;
+- Näidikulaua täiustamine äriküsimusele vastamiseks.
 
 ## Mis takistab
 

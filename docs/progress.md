@@ -39,23 +39,23 @@ docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --
 
 Oodatav tulemus:
 
-Märksõna 'rebar' tulemusi: 175
-Kõigile märksõnadele sobivate EPD-de arv: 175
-Tulemused salvestatud faili: /app/scripts/epd_selected_fields.csv
-CSV ridu: 175
-Andmed lisatud tabelisse staging.eco_epd_raw. run_id=81b00018-4879-47c9-8d36-af41bb02a403
-Finished API load
-Starting mart transformation: /app/scripts/01_transform.sql
-Finished mart transformation
-Starting quality tests: /app/scripts/02_quality_tests.sql
-Finished quality tests
-Latest pipeline run: run_id=81b00018-4879-47c9-8d36-af41bb02a403 | status=success | fetched_at=2026-05-31 08:44:40.877522+03:00 | message=keywords=['rebar']; matched=175; loaded=175; failed_detail_queries=0; csv=/app/scripts/epd_selected_fields.csv
-Latest successful run counts: run_id=81b00018-4879-47c9-8d36-af41bb02a403 | staging_rows=175 | mart_rows=175
-mart.latest_eco_epd sample rows: 10
+- Märksõna 'rebar' tulemusi: 175
+- Kõigile märksõnadele sobivate EPD-de arv: 175
+- Tulemused salvestatud faili: /app/scripts/epd_selected_fields.csv
+- CSV ridu: 175
+- Andmed lisatud tabelisse staging.eco_epd_raw. run_id=81b00018-4879-47c9-8d36-af41bb02a403
+- Finished API load
+- Starting mart transformation: /app/scripts/01_transform.sql
+- Finished mart transformation
+- Starting quality tests: /app/scripts/02_quality_tests.sql
+- Finished quality tests
+- Latest pipeline run: 
+- Latest successful run counts: 
+- mart.latest_eco_epd sample rows: 10
 
 Quality test results:
-FAILED | eco_epd_biogenic_not_negative | failed_rows=8 | Biogeenne GWP ei tohi olla negatiivne.
-FAILED | eco_epd_no_empty_rows | failed_rows=27 | EPD kirjetel ei tohi puududa põhiandmed.
-PASSED | eco_epd_gwp_control_within_tolerance | failed_rows=0 | GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust.
-PASSED | eco_epd_mart_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks mart-rida.
-PASSED | eco_epd_raw_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.
+- FAILED | eco_epd_biogenic_not_negative | failed_rows=8 | Biogeenne GWP ei tohi olla negatiivne.
+- FAILED | eco_epd_no_empty_rows | failed_rows=27 | EPD kirjetel ei tohi puududa põhiandmed.
+- PASSED | eco_epd_gwp_control_within_tolerance | failed_rows=0 | GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust.
+- PASSED | eco_epd_mart_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks mart-rida.
+- PASSED | eco_epd_raw_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.

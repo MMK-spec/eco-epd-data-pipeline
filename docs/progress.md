@@ -9,6 +9,7 @@
 - [x] Vähemalt üks näidikulaud on nähtaval
 - [x] Vähemalt üks andmekvaliteedi test läbib
 
+### Lisainfo:
 - Docker Compose käivitab PostgreSQL-i, töövoo konteineri, scheduleri ja Superset näidikulaua;
 - Andmed päritakse ECO Portal API kaudu ja salvestatakse .csv faili ja `staging` kihti;
 - `01_transform.sql` muundab andmed `staging` kihist `mart` kihti;
@@ -33,9 +34,7 @@
 Käsk, millega saab kontrollida, et töövoog töötab:
 
 ```bash
-# [Lisa siia käsk, mis näitab, et andmed liiguvad allikast näidikulauani]
-# Näiteks:
-docker compose exec pipeline python scripts/run_pipeline.py check
+docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar -y --provision-superset
 ```
 
 Oodatav tulemus: [Kirjelda, mida töötav süsteem väljastab]

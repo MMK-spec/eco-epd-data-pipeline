@@ -51,7 +51,17 @@ Täpsem kirjeldus: [`docs/arhitektuur.md`](docs/arhitektuur.md)
 | ECO Portal API | API | Jah, andmed uuenevad uute EPD-de lisandumisel või olemasolevate uuendamisel. Kontroll iga päev | Peamine andmeallikas |
 | [Teise allika nimi] | [seed / dim-tabel] | Ei, staatiline | Kõrvaltabel |
 
-## Stack
+## Eeldused
+
+Sammud tehakse hosti terminalis ehk selles terminalis, kus saad kasutada docker compose käsku.
+
+Vaja on:
+- Docker Desktop või muu Docker Compose keskkond;
+- ligipääs internetile, et ECO Portal API-st andmeid lugeda;
+- vaba port 55432 PostgreSQL-i jaoks ja 8088 näidikulaua jaoks.
+Kui port on hõivatud, muuda .env failis väärtusi DB_PORT_HOST või DASHBOARD_PORT_HOST.
+
+# Stack
 
 | Komponent | Tööriist |
 |-----------|---------|

@@ -111,7 +111,8 @@ Vajalikud muutujad:
 | Muutuja | Tähendus | Näide |
 |---------|----------|-------|
 | `DB_PASSWORD` | PostgreSQL parool | (saladus) |
-| `[teised]` | ... | ... |
+| `TOKEN` | API parool | (pikk numbrite ja tähtede jada) |
+| `SUPERSET_SECRET_KEY` | Superseti võti | 32 kohaline genereeritud võti |
 
 ## Andmevoog lühidalt
 

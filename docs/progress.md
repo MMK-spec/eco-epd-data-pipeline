@@ -34,7 +34,7 @@
 Käsk, millega saab kontrollida, et töövoog töötab:
 
 ```bash
-docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar -y --provision-superset
+docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y
 ```
 
 Oodatav tulemus: [Kirjelda, mida töötav süsteem väljastab]

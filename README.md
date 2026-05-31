@@ -74,13 +74,13 @@ Kui port on hõivatud, muuda .env failis väärtusi DB_PORT_HOST või DASHBOARD_
 ## Käivitamine
 
 ```bash
-# 1. Klooni repo ja liigu kausta
+# 1. Klooni repo ja liigu eco-epd-data-pipeline kausta
 git clone <repo-url>
-cd <projekti-kaust>
+cd eco-epd-data-pipeline
 
 # 2. Kopeeri keskkonnamuutujad
 cp .env.example .env
-# Muuda .env failis TOKEN ja asenda SUPERSET_SECRET_KEY väärtus:
+# Muuda .env failis TOKEN, genereeri ja asenda SUPERSET_SECRET_KEY väärtus:
 python -c "import secrets; print(secrets.token_hex(32))"
 
 # 3. Käivita teenused
@@ -88,13 +88,16 @@ docker compose up -d --build
 
 # 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
 docker compose run --rm pipeline python scripts/run_pipeline.py rebar --init-db -y
+# Oodatav tulemus: Märksõna rebar kohta 175 vastet, genereeriti .csv ja tabeli read, toimus transformatsioon ja 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
 
 # 5. Ava Superset
 #    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)
+
+# Kui sul oli sama projekt vanema skeemiga juba käivitatud, kustuta enne vana andmebaasimaht:
+docker compose down -v
+docker compose up -d --build
 ```
 
-Airflow (kui kasutatakse): http://localhost:8080 (kasutaja: airflow / parool: airflow)
-Näidikulaud: http://localhost:[PORT]
 
 ## Saladused ja konfiguratsioon
 

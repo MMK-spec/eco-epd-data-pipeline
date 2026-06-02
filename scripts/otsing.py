@@ -406,8 +406,11 @@ df = pd.DataFrame(rows)  # Muudab read pandas tabeliks
 # tulemuste print terminalis: print(df.to_string(index=False))  # Kuvab tulemuse terminalis
 
 # CSV fail salvestatakse projekti kausta
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 OUTPUT_FILE = os.path.join(
-    PROJECT_DIR,
+    BASE_DIR,
+    "..",
     "data",
     "epd_selected_fields.csv"
 )

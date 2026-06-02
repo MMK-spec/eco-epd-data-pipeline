@@ -29,7 +29,6 @@ flowchart LR
     transform --> mart[(PostgreSQL mart)]
     mart --> dashboard[ Superset näidikulaud]
     mart --> quality[Andmekvaliteedi testid]
-    scheduler[Cron Scheduler] --> ingest
 ```
 
 ## Andmebaasi kihid

@@ -86,7 +86,8 @@ python -c "import secrets; print(secrets.token_hex(32))"
 docker compose up -d --build
 
 # 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
-docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset# Oodatav tulemus:
+docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset
+# Oodatav tulemus:
 # - Märksõna rebar kohta 175 vastet,
 # - genereeriti .csv ja tabeli read, toimus transformatsioon
 # - 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"

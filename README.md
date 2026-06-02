@@ -17,7 +17,7 @@ Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku 
 |---------|------|
 | Selge äriküsimus | Keskkonnadeklaratsioonide süsinikjalajälje info usaldusväärsus |
 | Ajas muutuv andmeallikas | ECO Portal API uueneb tootjate deklaratsioonide esitamisel |
-| Automatiseeritud sissevõtt | `scheduler` konteiner käivitab töövoo croni ajakava järgi korra päevas. |
+| Automatiseeritud sissevõtt | Andmed loetakse sisse pipeline'i käivitamisega |
 | Vähemalt üks transformatsioon | `scripts/01_transform.sql` loob `staging` andmetest `mart` kihi tabelid |
 | Andmekvaliteedi testid | `scripts/02_quality_tests.sql` käivitab andmete ja jalajälje näitajate kontrollid |
 | Näidikulaud | Superset rakendus näitab... |
@@ -34,7 +34,6 @@ flowchart LR
     transform --> mart[(PostgreSQL mart)]
     mart --> dashboard[ Superset näidikulaud]
     mart --> quality[Andmekvaliteedi testid]
-    scheduler[Cron Scheduler] --> ingest
 ```
 
 Andmekihid:

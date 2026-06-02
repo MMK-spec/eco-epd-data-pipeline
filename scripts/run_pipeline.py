@@ -468,7 +468,17 @@ class SupersetClient:
         if existing:
             log(f"Superset database exists: {database_name} (id={existing.get('id')})")
             return existing
+
         created = self.create_database(database_name, sqlalchemy_uri)
+
+        # Superset 6 may return the created database object without numeric "id".
+        # Dataset creation still needs that numeric id, so fetch the database list again
+        # after creation and merge the richer/list response back into the created object.
+        if created.get("id") is None:
+            refreshed = self.find_database(database_name)
+            if refreshed:
+                created = {**created, **refreshed}
+
         log(f"Created Superset database: {database_name} (id={created.get('id')})")
         return created
 
@@ -557,8 +567,22 @@ def provision_superset(
 
     database = client.get_or_create_database(final_database_name, final_sqlalchemy_uri)
     database_id = database.get("id")
+
     if database_id is None:
-        raise PipelineError(f"Could not determine Superset database id from response: {database}")
+        # One more refresh makes this robust against Superset API responses that include
+        # only UUID/connection metadata immediately after creation.
+        refreshed = client.find_database(final_database_name)
+        if refreshed:
+            database_id = refreshed.get("id")
+
+    if database_id is None:
+        raise PipelineError(
+            "Could not determine Superset database numeric id. "
+            "The database connection was probably created, but Superset did not return its id. "
+            "Open Superset → Settings → Database Connections to verify it exists, then rerun "
+            "`python scripts/run_pipeline.py provision-superset`. "
+            f"Last response: {database}"
+        )
 
     for schema, table_name in datasets:
         client.get_or_create_dataset(int(database_id), schema, table_name)

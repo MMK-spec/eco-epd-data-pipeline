@@ -57,6 +57,8 @@ services:
         condition: service_healthy
     volumes:
       - ./scripts:/app/scripts
+      - ./data:/app/data
+      - ./superset:/app/superset:ro
     working_dir: /app
     tty: true
 

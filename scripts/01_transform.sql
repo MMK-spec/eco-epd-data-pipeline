@@ -6,12 +6,40 @@ WITH latest_run AS (
     WHERE status = 'success'
     ORDER BY fetched_at DESC
     LIMIT 1
+),
+normalized AS (
+    SELECT
+        e.*,
+        COALESCE(
+            NULLIF(BTRIM(e.name_en), ''),
+            NULLIF(BTRIM(e.name_no), ''),
+            NULLIF(BTRIM(e.name_da), ''),
+            NULLIF(BTRIM(e.name_sv), '')
+        ) AS name,
+        CASE
+            WHEN e.gwp_fossil_a1a3 IS NOT NULL
+             AND e.gwp_biogenic_a1a3 IS NOT NULL
+             AND e.gwp_fossil_a1a3 < e.gwp_biogenic_a1a3
+                THEN e.gwp_fossil_a1a3
+            ELSE e.gwp_biogenic_a1a3
+        END AS gwp_biogenic_a1a3_normalized,
+        CASE
+            WHEN e.gwp_fossil_a1a3 IS NOT NULL
+             AND e.gwp_biogenic_a1a3 IS NOT NULL
+             AND e.gwp_fossil_a1a3 < e.gwp_biogenic_a1a3
+                THEN e.gwp_biogenic_a1a3
+            ELSE e.gwp_fossil_a1a3
+        END AS gwp_fossil_a1a3_normalized
+    FROM staging.eco_epd_raw AS e
+    INNER JOIN latest_run AS r
+        ON e.run_id = r.run_id
 )
 INSERT INTO mart.eco_epd (
     run_id,
     uuid,
     version,
     location_code,
+    name,
     reference_year,
     valid_until,
     declaration_owner,
@@ -27,34 +55,33 @@ INSERT INTO mart.eco_epd (
     source_url
 )
 SELECT
-    e.run_id,
-    e.uuid,
-    e.version,
-    e.location_code,
-    e.reference_year,
-    e.valid_until,
-    e.declaration_owner,
-    e.publication_date,
+    n.run_id,
+    n.uuid,
+    n.version,
+    n.location_code,
+    n.name,
+    n.reference_year,
+    n.valid_until,
+    n.declaration_owner,
+    n.publication_date,
 
     GREATEST(
-        COALESCE(e.ref_quantity, 0),
-        COALESCE(e.mass_kg, 0)
+        COALESCE(n.ref_quantity, 0),
+        COALESCE(n.mass_kg, 0)
     ) AS quantity,
 
-    e.ref_unit,
+    n.ref_unit,
 
-    e.gwp_total_a1a3,
-    e.gwp_biogenic_a1a3,
-    e.gwp_fossil_a1a3,
-    e.gwp_luluc_a1a3,
+    n.gwp_total_a1a3,
+    n.gwp_biogenic_a1a3_normalized AS gwp_biogenic_a1a3,
+    n.gwp_fossil_a1a3_normalized AS gwp_fossil_a1a3,
+    n.gwp_luluc_a1a3,
 
-    e.gwp_total_a1a3
-        - e.gwp_biogenic_a1a3
-        - e.gwp_fossil_a1a3
-        - e.gwp_luluc_a1a3 AS gwp_control,
+    n.gwp_total_a1a3
+        - n.gwp_biogenic_a1a3_normalized
+        - n.gwp_fossil_a1a3_normalized
+        - n.gwp_luluc_a1a3 AS gwp_control,
 
-    e.fetched_at,
-    e.source_url
-FROM staging.eco_epd_raw AS e
-INNER JOIN latest_run AS r
-    ON e.run_id = r.run_id;
+    n.fetched_at,
+    n.source_url
+FROM normalized AS n;

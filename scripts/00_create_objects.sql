@@ -60,6 +60,8 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
     version text,
 
     location_code text,
+    
+    name text,
 
     reference_year integer,
     valid_until date,

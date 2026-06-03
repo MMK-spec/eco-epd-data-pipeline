@@ -4,6 +4,8 @@ EPD data pipeline orchestrator.
 
 Recommended Docker usage:
     docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y
+    docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset
+    docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset --import-superset-assets
     docker compose run --rm pipeline python scripts/run_pipeline.py transform-test
     docker compose run --rm pipeline python scripts/run_pipeline.py summary
     docker compose run --rm pipeline python scripts/run_pipeline.py provision-superset
@@ -18,11 +20,16 @@ Stages:
 4. Quality tests through 02_quality_tests_fixed.sql
 5. Optional summary output
 6. Optional Superset database + dataset provisioning through the Superset REST API
+7. Optional Superset dashboard/assets import from a ZIP export
+
+By default, run-all logs quality-test failures but continues to Superset provisioning/import.
+Use --fail-on-quality-failures if quality failures should stop the run.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shlex
 import subprocess
@@ -328,6 +335,14 @@ def env_first(*names: str, default: str | None = None) -> str | None:
     return default
 
 
+def env_truthy(*names: str) -> bool:
+    for name in names:
+        value = os.getenv(name)
+        if value is not None:
+            return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+    return False
+
+
 def parse_dataset_specs(raw_specs: list[str] | None = None) -> list[tuple[str, str]]:
     specs = raw_specs or []
     if not specs:
@@ -382,6 +397,122 @@ def build_epd_sqlalchemy_uri(explicit_uri: str | None = None) -> str:
         )
 
     return f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db_name}"
+
+
+def resolve_superset_assets_file(script_dir: Path, explicit_path: str | None = None) -> Path | None:
+    """Resolve a Superset dashboard/assets ZIP file for API import."""
+    raw_value = (
+        explicit_path
+        or os.getenv("SUPERSET_ASSETS_FILE")
+        or os.getenv("SUPERSET_DASHBOARD_IMPORT_FILE")
+        or os.getenv("SUPERSET_IMPORT_FILE")
+    )
+
+    attempted: list[Path] = []
+
+    if raw_value:
+        raw_path = Path(raw_value)
+        if raw_path.is_absolute():
+            attempted.append(raw_path)
+        else:
+            attempted.extend([
+                Path.cwd() / raw_path,
+                script_dir / raw_path,
+                script_dir.parent / raw_path,
+            ])
+    else:
+        for relative in (
+            Path("superset/exports/superset_assets.zip"),
+            Path("superset/exports/epd_dashboard.zip"),
+            Path("superset/exports/dashboard.zip"),
+        ):
+            attempted.extend([
+                script_dir.parent / relative,
+                Path.cwd() / relative,
+                script_dir / relative,
+            ])
+
+    seen: set[Path] = set()
+    unique_attempts: list[Path] = []
+    for path in attempted:
+        resolved = path.resolve()
+        if resolved not in seen:
+            seen.add(resolved)
+            unique_attempts.append(resolved)
+
+    for path in unique_attempts:
+        if path.exists() and path.is_file():
+            return path
+
+    if raw_value:
+        attempted_text = ", ".join(str(path) for path in unique_attempts)
+        raise FileNotFoundError(f"Superset assets ZIP not found. Tried: {attempted_text}")
+
+    return None
+
+
+def should_provision_superset(args: argparse.Namespace) -> bool:
+    return bool(getattr(args, "provision_superset", False)) or env_truthy(
+        "PIPELINE_PROVISION_SUPERSET",
+        "PROVISION_SUPERSET",
+    )
+
+
+def should_import_superset_assets(args: argparse.Namespace) -> bool:
+    return bool(getattr(args, "import_superset_assets", False)) or env_truthy(
+        "SUPERSET_IMPORT_ASSETS",
+        "PIPELINE_IMPORT_SUPERSET_ASSETS",
+    )
+
+
+def should_fail_on_quality_failures(args: argparse.Namespace) -> bool:
+    return bool(getattr(args, "fail_on_quality_failures", False)) or env_truthy(
+        "PIPELINE_FAIL_ON_QUALITY_FAILURES",
+        "FAIL_ON_QUALITY_FAILURES",
+    )
+
+
+def safe_database_yaml_name(database_name: str) -> str:
+    """Return Superset export YAML filename convention for a database name."""
+    cleaned = "_".join(part for part in database_name.strip().split() if part)
+    return cleaned or "database"
+
+
+def build_superset_import_passwords(database_name: str) -> dict[str, str]:
+    """
+    Build the passwords map required by Superset dashboard/assets import.
+
+    Superset exports database YAML without passwords. On import, Superset expects
+    a JSON object where the key is the database YAML path inside the export,
+    for example: {"databases/EPD_mart.yaml": "password"}.
+    """
+    raw_json = os.getenv("SUPERSET_IMPORT_PASSWORDS_JSON") or os.getenv("SUPERSET_DATABASE_PASSWORDS_JSON")
+    if raw_json:
+        try:
+            parsed = json.loads(raw_json)
+        except json.JSONDecodeError as exc:
+            raise PipelineError(f"Invalid SUPERSET_IMPORT_PASSWORDS_JSON: {exc}") from exc
+        if not isinstance(parsed, dict):
+            raise PipelineError("SUPERSET_IMPORT_PASSWORDS_JSON must be a JSON object.")
+        return {str(key): str(value) for key, value in parsed.items()}
+
+    password = env_first(
+        "SUPERSET_IMPORT_DATABASE_PASSWORD",
+        "SUPERSET_READER_PASSWORD",
+        "SUPERSET_EPD_PASSWORD",
+        "POSTGRES_PASSWORD",
+    )
+    if not password:
+        return {}
+
+    yaml_name = safe_database_yaml_name(database_name)
+    return {
+        f"databases/{yaml_name}.yaml": password,
+        # Some tools may preserve the dashboard export root directory in paths.
+        # The plain databases/... key is the one Superset reports in validation errors,
+        # but this extra key is harmless and makes the import more tolerant.
+        f"database/{yaml_name}.yaml": password,
+    }
 
 
 class SupersetClient:
@@ -525,6 +656,86 @@ class SupersetClient:
         log(f"Created Superset dataset: {schema}.{table_name} (id={created.get('id')})")
         return created
 
+    def upload_import_zip(
+        self,
+        endpoint: str,
+        zip_file: Path,
+        overwrite: bool = True,
+        file_field: str = "formData",
+        passwords: dict[str, str] | None = None,
+    ) -> dict:
+        # Superset import endpoints are picky about multipart field names:
+        # - /api/v1/assets/import/ expects the ZIP under the field name "bundle".
+        # - /api/v1/dashboard/import/ expects the ZIP under the field name "formData".
+        # Do not set Content-Type manually; requests must create the multipart boundary.
+        data = {"overwrite": "true" if overwrite else "false"}
+        if passwords is not None:
+            data["passwords"] = json.dumps(passwords)
+
+        with zip_file.open("rb") as handle:
+            files = {file_field: (zip_file.name, handle, "application/zip")}
+            response = self.session.request(
+                "post",
+                self.url(endpoint),
+                files=files,
+                data=data,
+                timeout=180,
+            )
+
+        if response.status_code >= 400:
+            raise PipelineError(
+                f"Superset API POST {endpoint} failed with {response.status_code}: {response.text[:1000]}"
+            )
+        if not response.text:
+            return {}
+        try:
+            return response.json()
+        except ValueError:
+            return {"raw_response": response.text}
+
+    def import_assets_zip(
+        self,
+        zip_file: Path,
+        overwrite: bool = True,
+        passwords: dict[str, str] | None = None,
+    ) -> dict:
+        log(f"Importing Superset dashboard/assets from: {zip_file}")
+        if passwords:
+            log(f"Using Superset import password map for: {', '.join(sorted(passwords))}")
+        else:
+            log("No Superset import passwords configured")
+
+        # The exported ZIP used by this project comes from Superset dashboard export,
+        # so use the dashboard import endpoint directly. This avoids a noisy, expected
+        # failure from /api/v1/assets/import/ before falling back.
+        try:
+            result = self.upload_import_zip(
+                "/api/v1/dashboard/import/",
+                zip_file,
+                overwrite=overwrite,
+                file_field="formData",
+                passwords=passwords or {},
+            )
+            log("Superset dashboard import finished via /api/v1/dashboard/import/")
+            return result
+        except PipelineError as dashboard_exc:
+            # If a user later provides a full assets export ZIP instead of a dashboard
+            # export ZIP, try the generic assets endpoint as a fallback.
+            log(
+                "Dashboard import failed; trying generic assets import endpoint. "
+                f"Error: {dashboard_exc}"
+            )
+
+        result = self.upload_import_zip(
+            "/api/v1/assets/import/",
+            zip_file,
+            overwrite=overwrite,
+            file_field="bundle",
+            passwords=passwords or {},
+        )
+        log("Superset assets import finished via /api/v1/assets/import/")
+        return result
+
 
 def wait_for_superset(base_url: str, max_attempts: int = 30, delay_seconds: int = 2) -> None:
     health_url = base_url.rstrip("/") + "/health"
@@ -548,6 +759,10 @@ def provision_superset(
     database_name: str | None,
     sqlalchemy_uri: str | None,
     dataset_specs: list[str] | None,
+    import_assets: bool = False,
+    assets_file: str | None = None,
+    assets_overwrite: bool = True,
+    script_dir: Path | None = None,
 ) -> None:
     base_url = superset_url or os.getenv("SUPERSET_URL") or "http://superset:8088"
     username = env_first("SUPERSET_ADMIN_USER", "SUPERSET_ADMIN_USERNAME", "ADMIN_USERNAME", default="admin")
@@ -587,6 +802,23 @@ def provision_superset(
     for schema, table_name in datasets:
         client.get_or_create_dataset(int(database_id), schema, table_name)
 
+    if import_assets:
+        resolved_script_dir = script_dir or Path(__file__).resolve().parent
+        zip_file = resolve_superset_assets_file(resolved_script_dir, assets_file)
+        if not zip_file:
+            log(
+                "Superset asset import requested, but no ZIP file was found. "
+                "Expected one of: superset/exports/superset_assets.zip, "
+                "superset/exports/epd_dashboard.zip, or set SUPERSET_ASSETS_FILE."
+            )
+        else:
+            import_passwords = build_superset_import_passwords(final_database_name)
+            client.import_assets_zip(
+                zip_file,
+                overwrite=assets_overwrite,
+                passwords=import_passwords,
+            )
+
     log("Superset provisioning finished")
 
 def env_keywords() -> list[str]:
@@ -600,6 +832,10 @@ def add_superset_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--superset-database-name", default=None, help="Superset display name for the EPD database. Default: SUPERSET_EPD_DATABASE_NAME or EPD mart.")
     parser.add_argument("--superset-sqlalchemy-uri", default=None, help="SQLAlchemy URI Superset uses to reach the EPD database. Default is built from env vars.")
     parser.add_argument("--superset-dataset", action="append", default=[], help="Dataset to create, e.g. mart.latest_eco_epd. Can be repeated.")
+    parser.add_argument("--import-superset-assets", action="store_true", help="Import Superset dashboards/assets from a ZIP export after provisioning.")
+    parser.add_argument("--superset-assets-file", default=None, help="Path to Superset dashboard/assets ZIP. Default: SUPERSET_ASSETS_FILE or superset/exports/*.zip.")
+    parser.add_argument("--no-superset-import-overwrite", dest="superset_import_overwrite", action="store_false", help="Do not overwrite existing Superset assets during import.")
+    parser.set_defaults(superset_import_overwrite=True)
 
 
 def add_common_options(parser: argparse.ArgumentParser) -> None:
@@ -611,6 +847,11 @@ def add_common_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("-y", "--yes", action="store_true", help="Pass --yes to API script.")
     parser.add_argument("--api-arg", action="append", default=[], help="Extra argument passed to API script. Can be repeated.")
     parser.add_argument("--summary-rows", type=int, default=10, help="Number of mart rows to print in summary.")
+    parser.add_argument(
+        "--fail-on-quality-failures",
+        action="store_true",
+        help="Fail after printing quality results if any quality test fails. Default: log failures and continue.",
+    )
     add_superset_options(parser)
 
 
@@ -675,6 +916,19 @@ def resolve_output_file(script_dir: Path, output: str | None) -> Path | None:
     return (Path.cwd() / raw_path).resolve()
 
 
+def run_superset_deployment(script_dir: Path, args: argparse.Namespace) -> None:
+    provision_superset(
+        getattr(args, "superset_url", None),
+        getattr(args, "superset_database_name", None),
+        getattr(args, "superset_sqlalchemy_uri", None),
+        getattr(args, "superset_dataset", None),
+        import_assets=should_import_superset_assets(args),
+        assets_file=getattr(args, "superset_assets_file", None),
+        assets_overwrite=getattr(args, "superset_import_overwrite", True),
+        script_dir=script_dir,
+    )
+
+
 def command_keywords(args: argparse.Namespace) -> list[str]:
     keywords = getattr(args, "keywords", None)
     if keywords:
@@ -703,12 +957,7 @@ def main() -> int:
             return 0
 
         if args.command == "provision-superset":
-            provision_superset(
-                getattr(args, "superset_url", None),
-                getattr(args, "superset_database_name", None),
-                getattr(args, "superset_sqlalchemy_uri", None),
-                getattr(args, "superset_dataset", None),
-            )
+            run_superset_deployment(script_dir, args)
             return 0
 
         files = resolve_runtime_files(script_dir, args)
@@ -738,14 +987,9 @@ def main() -> int:
             run_sql_file(files["transform_sql"], "mart transformation")
             run_sql_file(files["test_sql"], "quality tests")
             print_summary(show_rows=args.summary_rows)
-            print_quality_results(require_passed=True)
-            if getattr(args, "provision_superset", False):
-                provision_superset(
-                    getattr(args, "superset_url", None),
-                    getattr(args, "superset_database_name", None),
-                    getattr(args, "superset_sqlalchemy_uri", None),
-                    getattr(args, "superset_dataset", None),
-                )
+            print_quality_results(require_passed=should_fail_on_quality_failures(args))
+            if should_provision_superset(args):
+                run_superset_deployment(script_dir, args)
             log("Transform + tests finished successfully")
             return 0
 
@@ -760,18 +1004,13 @@ def main() -> int:
             if not getattr(args, "skip_tests", False):
                 run_sql_file(files["test_sql"], "quality tests")
                 print_summary(show_rows=args.summary_rows)
-                print_quality_results(require_passed=True)
+                print_quality_results(require_passed=should_fail_on_quality_failures(args))
             else:
                 log("Skipping quality tests (--skip-tests)")
                 print_summary(show_rows=args.summary_rows)
 
-            if getattr(args, "provision_superset", False):
-                provision_superset(
-                    getattr(args, "superset_url", None),
-                    getattr(args, "superset_database_name", None),
-                    getattr(args, "superset_sqlalchemy_uri", None),
-                    getattr(args, "superset_dataset", None),
-                )
+            if should_provision_superset(args):
+                run_superset_deployment(script_dir, args)
 
             log("Full pipeline finished successfully")
             return 0

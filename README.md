@@ -85,14 +85,15 @@ python -c "import secrets; print(secrets.token_hex(32))"
 # 3. Käivita teenused
 docker compose up -d --build
 
-# 4. [Vabatahtlik: käivita sissevõtt käsitsi esimesel korral]
-docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset
+# 4. Käivita pipeline
+docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset --import-superset-assets
 # Oodatav tulemus:
-# - Märksõna rebar kohta 175 vastet,
+# - Märksõna rebar kohta 170+ vastet,
 # - genereeriti .csv ja tabeli read, toimus transformatsioon
 # - 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
+# - Full pipeline finished successfully
 
-Kui Superseti dataset on kadunud:
+Kui Superseti dataset on millegi pärasy kadunud:
 docker compose run --rm pipeline python scripts/run_pipeline.py provision-superset
 
 # 5. Ava Superset

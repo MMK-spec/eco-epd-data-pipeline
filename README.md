@@ -87,13 +87,10 @@ docker compose up -d --build
 # 4. Käivita pipeline
 docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --init-db -y --provision-superset --import-superset-assets
 # Oodatav tulemus:
-# - Märksõna rebar kohta 170+ vastet,
+# - Märksõna rebar kohta 180+ vastet,
 # - genereeriti .csv ja tabeli read, toimus transformatsioon
 # - 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
-# - Full pipeline finished successfully
-
-Kui Superseti dataset on millegi pärasy kadunud:
-docker compose run --rm pipeline python scripts/run_pipeline.py provision-superset
+# - Superset dashboard import finished
 
 # 5. Ava Superset
 #    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)
@@ -101,6 +98,7 @@ docker compose run --rm pipeline python scripts/run_pipeline.py provision-supers
 # Kui sul oli sama projekt vanema skeemiga juba käivitatud, kustuta enne vana andmebaasimaht:
 docker compose down -v
 docker compose up -d --build
+
 ```
 
 

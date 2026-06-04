@@ -88,6 +88,15 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
     PRIMARY KEY (run_id, uuid)
 );
 
+
+-- Migration-safe additions for existing databases.
+-- CREATE TABLE IF NOT EXISTS does not add new columns to an already existing table.
+ALTER TABLE mart.eco_epd
+    ADD COLUMN IF NOT EXISTS name text;
+
+ALTER TABLE mart.eco_epd
+    ADD COLUMN IF NOT EXISTS gwp_fossil_a1a3_assumed numeric(18, 6);
+
 CREATE TABLE IF NOT EXISTS quality.test_results (
     test_run_at timestamptz NOT NULL DEFAULT now(),
     test_name text NOT NULL,

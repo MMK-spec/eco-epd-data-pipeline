@@ -181,8 +181,8 @@ Testide tulemused: Salvestatakse quality.test_results tabelisse ja tulemused kuv
 - Näidikulaud kuvab äriküsimuse jaoks kõige olulisemat infot.
 
 **Puudused:**
-- ECO Portali struktuur on keeruline ning praegused skriptid ei tööta veel piisavalt hästi, et kõik vajalikud andmed automaatselt ja usaldusväärselt kätte saada. Seetõttu õnnestus analüüsi kaasata ainult osa päringuga leitud EPD-dest. - Osa andmeid jäi kasutamata, kuna nende struktuur, puuduvad väljad või erinev esitusviis vajaks täiendavat käsitlemist skriptides.
-- Kvaliteedikontrollide osaline ebaõnnestumine on taotuslik ja näitab alusandmestiku kvaliteedi puudujääke.
+- ECO Portali struktuur on keeruline ning praeguse projekti raames ei õnnestunud kõiki erisusi avastada, et kõik vajalikud andmed automaatselt ja usaldusväärselt kätte saada. Põhjus, miks lõppanalüüsi on kaasatud ainult osa päringuga leitud EPD-dest.
+- Kvaliteedikontrollide osaline ebaõnnestumine on taotuslik ja näitab alusandmestiku kvaliteedi ja loogika puudujääke.
 
 **Mis edasi:**
 - Andmete kogumise skriptide täiustamine, et suurem osa ECO Portalis saaks kätte rohkem infot.

@@ -68,7 +68,6 @@ Kui port on hõivatud, muuda .env failis väärtusi DB_PORT_HOST või DASHBOARD_
 | Transformatsioon | SQL |
 | Andmehoidla | PostgreSQL |
 | Näidikulaud | Superset |
-| Orkestreerimine | cron |
 
 ## Käivitamine
 

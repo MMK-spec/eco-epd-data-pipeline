@@ -118,11 +118,11 @@ Vajalikud muutujad:
 
 ## Andmevoog lühidalt
 
-1. **Sissevõtt** — [Kirjelda, kuidas andmed allikast kätte saadakse]
-2. **Laadimine** — Andmed laaditakse `staging` kihti
-3. **Transformatsioon** — 
-4. **Testimine** — 5 andmekvaliteedi testi kontrollivad andmete korrektsust
-5. **Näidikulaud** — [Kirjelda lühidalt, mida näidikulaud näitab]
+1. **Sissevõtt** — Andmed saadakse ECO Portali API kaudu.
+2. **Laadimine** — Andmed laaditakse `staging` kihti.
+3. **Transformatsioon** — Andmed viiakse mart kihti. Transformatsiooni käigus valitakse viimane edukas päring, ühtlustatakse tootenimi eri keelte väljade põhjal, korrigeeritakse võimalik GWP-fossiilse ja GWP-biogeense väärtuse vahetus, määratakse kogus referentskoguse või massi põhjal ning arvutatakse analüüsis kasutatav gwp_fossil_a1a3_assumed väärtus. Kui referentsühik on kg ja GWP-fossiilne väärtus on esitatud ühe kilogrammi kohta, teisendatakse see võrdluseks kilogrammidelt tonnile. Lisaks arvutatakse kontrollväli gwp_control, millega võrreldakse GWP alamkategooriate summat GWP koguväärtusega.
+4. **Testimine** — 5 andmekvaliteedi testi kontrollivad andmete korrektsust.
+5. **Näidikulaud** — Näidikulaud näitab, mitu EPDd leiti ja mitu neist on analüüsiks sobivad. Lisaks on kuvatud GWP-fossiilse väärtused toodete lõikes ja tootjate keskmised väärtused. Näidikulaual on ka graafik, mis näitab väärtusete jaotust.
 
 ## Andmekvaliteedi testid
 

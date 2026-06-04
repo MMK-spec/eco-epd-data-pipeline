@@ -2,7 +2,9 @@
 
 ## Äriküsimus
 
-Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku jalajälje väärtused erinevate toodete ja tootjate vahel ning kas andmed on piisavalt täielikud ja võrreldavad automaatseks analüüsiks?
+Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku jalajälje väärtused erinevate toodete ja tootjate vahel?
+Kas andmed on piisavalt täielikud ja võrreldavad automaatseks analüüsiks?
+
 Esialgne projekti fookus armatuurterasel.
 
 ## Mõõdikud

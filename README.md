@@ -120,20 +120,21 @@ Vajalikud muutujad:
 
 1. **Sissevõtt** — [Kirjelda, kuidas andmed allikast kätte saadakse]
 2. **Laadimine** — Andmed laaditakse `staging` kihti
-3. **Transformatsioon** — [Kirjelda peamised arvutused ja mudelid]
-4. **Testimine** — [Mitu] andmekvaliteedi testi kontrollivad korrektsust
+3. **Transformatsioon** — 
+4. **Testimine** — 5 andmekvaliteedi testi kontrollivad andmete korrektsust
 5. **Näidikulaud** — [Kirjelda lühidalt, mida näidikulaud näitab]
 
 ## Andmekvaliteedi testid
 
 Projekt kontrollib järgmist:
 
-1. [Test 1 - nt: kasutajate ID on unikaalne]
-2. [Test 2 - nt: tellimuse summa pole null]
-3. [Test 3 - nt: kuupäev jääb vahemikku 2020-2026]
-[Lisa rohkem, kui sul on]
+1. Test 1 - Biogeenne GWP ei tohi olla negatiivne
+2. Test 2 - EPD kirjetel ei tohi puududa põhiandmed
+3. Test 3 - GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust
+4. Test 4 - Viimasel edukal laadimisel peab olema vähemalt üks mart-rida
+5. Test 5 - Viimasel edukal laadimisel peab olema vähemalt üks staging-rida
 
-Testide tulemused: [kuhu salvestatakse / kuidas vaadata]
+Testide tulemused: Salvestatakse quality.test_results tabelisse ja tulemused kuvatakse pipeline'i jooksutamisel.
 
 ## Projekti struktuur
 

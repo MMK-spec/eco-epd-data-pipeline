@@ -56,7 +56,7 @@ Iga pipeline'i käivitus salvestab API-st laaditud andmed staging'u kihti. Inter
 |------|------|---------|
 | Sobiva tootekategooria valimine võib osutuda keeruliseks | Liiga väike või metodoloogiliselt ebaühtlane EPD valim võib piirata analüüsi kvaliteeti | Enne lõpliku skoobi valimist hinnatakse eri tootekategooriate EPD-de hulka ja andmete võrreldavust |
 | Andmete kvaliteet riikide kaupa on erinev | Andmed ei ole võrreldavad | Kvaliteedikontrollid |
-| EPD-l toodud andmete kogumaht on liiga suur | Andmete kättesaamine ja analüüs on liiga aeglane | Ei laadi ega kasuta kõiki andmeid, mis EPD-de pealt on võimalik lugeda |
+| EPD-l toodud andmete kogumaht on liiga suur | Andmete kättesaamine ja analüüs on liiga aeglane | Ei lae ega kasuta kõiki andmeid, mis EPD-de pealt on võimalik lugeda |
 | API võtit tuleb iga 24h järel uuendada | Pidev võtme uuendamine segab ajatamise tööd | Uurime M2M võimalusi |
 
 ## Privaatsus ja turve

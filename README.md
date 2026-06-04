@@ -122,7 +122,7 @@ Vajalikud muutujad:
 
 1. **Sissevõtt** — Andmed saadakse ECO Portali API kaudu.
 2. **Laadimine** — Andmed laaditakse `staging` kihti.
-3. **Transformatsioon** —
+3. **Transformatsioon**
     - viiakse andmed mart kihti;
     - valitakse viimane edukas päring;
     - ühtlustatakse tootenimi eelistades en välja ja kui see on tühi võetakse kohalikust keelest;
@@ -152,10 +152,22 @@ Testide tulemused: Salvestatakse quality.test_results tabelisse ja tulemused kuv
 ├── compose.yml
 ├── .env.example
 ├── .gitignore
+├── Dockerfile.superset
+├── Dockerfile.app
 ├── docs/
 │   ├── arhitektuur.md      ← nädal 1 väljund
 │   └── progress.md         ← nädal 2 väljund
-└── ...                     ← ülejäänud projektifailid
+└── scripts/
+│   ├── 00_create_objects.sql
+│   ├── 01_tranform.sql
+│   ├── 02_quality_tests.sql
+│   ├── api_request.py
+│   ├── requirements.txt
+│   └── run_pipeline.py
+└── superset/
+│   ├── exports
+│   │   └── epd.dashboard.zip
+│   └── superset_config.py
 ```
 
 ## Kokkuvõte, puudused ja võimalikud edasiarendused

@@ -45,9 +45,7 @@ CREATE TABLE IF NOT EXISTS staging.eco_epd_raw (
     gwp_total_a1a3 numeric(18, 6),
     gwp_biogenic_a1a3 numeric(18, 6),
     gwp_fossil_a1a3 numeric(18, 6),
-    gwp_fossil_a1a3_assumed numeric(18, 6),
     gwp_luluc_a1a3 numeric(18, 6),
-    registration_authority text,
     htpnc_a1a3 numeric(18, 6),
 
     fetched_at timestamptz NOT NULL,
@@ -79,6 +77,7 @@ CREATE TABLE IF NOT EXISTS mart.eco_epd (
     gwp_total_a1a3 numeric(18, 6),
     gwp_biogenic_a1a3 numeric(18, 6),
     gwp_fossil_a1a3 numeric(18, 6),
+    gwp_fossil_a1a3_assumed numeric(18, 6),
     gwp_luluc_a1a3 numeric(18, 6),
     htpnc_a1a3 numeric(18, 6),
     gwp_control numeric(18, 6),

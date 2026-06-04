@@ -59,9 +59,9 @@ Quality test results:
 - FAILED | eco_epd_no_empty_rows | failed_rows=27 | EPD kirjetel ei tohi puududa põhiandmed.
 - PASSED | eco_epd_gwp_control_within_tolerance | failed_rows=0 | GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust.
 - PASSED | eco_epd_mart_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks mart-rida.
+- PASSED | eco_epd_raw_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.
 
 - Superset database exists
 - Superset dashboard import finished via /api/v1/dashboard/import/
 - Superset provisioning finished
-- PASSED | eco_epd_raw_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.
 ```

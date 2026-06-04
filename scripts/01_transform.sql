@@ -81,10 +81,10 @@ SELECT
     n.gwp_fossil_a1a3_normalized AS gwp_fossil_a1a3,
 
     CASE
-        WHEN n.ref_unit = 'kg'
-        AND n.gwp_fossil_a1a3_normalized > 0
-        AND n.gwp_fossil_a1a3_normalized < 10
-        THEN n.gwp_fossil_a1a3_normalized * 1000
+        WHEN LOWER(BTRIM(n.ref_unit)) = 'kg'
+         AND n.gwp_fossil_a1a3_normalized > 0
+         AND n.gwp_fossil_a1a3_normalized < 10
+            THEN n.gwp_fossil_a1a3_normalized * 1000
         ELSE n.gwp_fossil_a1a3_normalized
     END AS gwp_fossil_a1a3_assumed,
 

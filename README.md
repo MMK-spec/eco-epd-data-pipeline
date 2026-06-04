@@ -23,7 +23,7 @@ Esialgne projekti fookus armatuurterasel.
 | Automatiseeritud sissevõtt | Andmed loetakse sisse pipeline'i käivitamisega |
 | Vähemalt üks transformatsioon | `scripts/01_transform.sql` loob `staging` andmetest `mart` kihi tabelid |
 | Andmekvaliteedi testid | `scripts/02_quality_tests.sql` käivitab andmete ja jalajälje näitajate kontrollid |
-| Näidikulaud | Superset rakendus näitab... |
+| Näidikulaud | Superset rakendus näitab EPD-de koguarvu ja analüüsiks sobivaid EPD-sid; EPD-de hulka programmioperaatorite kohta; GWP-fossiilse väärtuste võrdlust tootjate ja toodete lõikes; GWP-fossiilse väärtuste jaotust|
 | Saladused .env failis | Ühenduse seaded tulevad `.env` failist. Repos on ainult `.env.example` |
 | README | Fail kirjeldab äriküsimust, arhitektuuri ja käivitamist |
 

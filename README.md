@@ -156,10 +156,12 @@ Testide tulemused: Salvestatakse quality.test_results tabelisse ja tulemused kuv
 - [Loetle, mis on lõpule viidud, mis töötab hästi]
 
 **Puudused:**
-- [Loetle ausalt, mis jäi tegemata - see ei mõjuta hinnet negatiivselt, vaid aitab hinnata]
+- ECO Portali struktuur on keeruline ning praegused skriptid ei tööta veel piisavalt hästi, et kõik vajalikud andmed automaatselt ja usaldusväärselt kätte saada. Seetõttu õnnestus analüüsi kaasata ainult osa päringuga leitud EPD-dest. Osa andmeid jäi kasutamata, kuna nende struktuur, puuduvad väljad või erinev esitusviis vajaks täiendavat käsitlemist skriptides.
 
 **Mis edasi:**
-- [Mida tahaksid edasi teha, kui aega oleks rohkem]
+- Andmete kogumise skripte täiustamine, et suurem osa ECO Portalis saaks kätte rohkem infot.
+- Autentimise protsessi automatiseerimine. Praegu tuleb API juurdepääsuks kasutada ajutist tokenit, mis kehtib 24 tundi. Tulevikus võiks lahendus automaatselt taotleda uue tokeni ja uuendada seda vajaduse korral, võimaldades andmetoru käivitada ilma käsitsi sekkumiseta.
+- Ülejäänud EPD näitajate kaasamine. Hetkel on põhirõhk GWP-fossiilsel, kuid EPDde pealt saaks kätte kordades rohkem infot.
 
 ## Meeskond
 

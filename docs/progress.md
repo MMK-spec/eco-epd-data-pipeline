@@ -19,10 +19,10 @@
 
 ## Järgmised sammud
 
-- Scheduleri lisamine projektile;
-- Andmete kogumise skriptide täiustamine, et andmebaasist saaks kätte võimalikult palju soovitud andmevälju;
-- Tranformatsiooni muudatused andmekvaliteedi tõstmiseks;
-- Näidikulaua täiustamine äriküsimusele vastamiseks.
+- [x] Scheduleri lisamine projektile - ei ole antud projekti puhul relevantne;
+- [x] Andmete kogumise skriptide täiustamine, et andmebaasist saaks kätte võimalikult palju soovitud andmevälju;
+- [x] Tranformatsiooni muudatused andmekvaliteedi tõstmiseks;
+- [x] Näidikulaua täiustamine äriküsimusele vastamiseks.
 
 ## Mis takistab
 
@@ -40,10 +40,10 @@ docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --
 Oodatav tulemus:
 
 ```bash
-- Märksõna 'rebar' tulemusi: 175
-- Kõigile märksõnadele sobivate EPD-de arv: 175
+- Märksõna 'rebar' tulemusi: 185
+- Kõigile märksõnadele sobivate EPD-de arv: 185
 - Tulemused salvestatud faili: /app/scripts/epd_selected_fields.csv
-- CSV ridu: 175
+- CSV ridu: 185
 - Andmed lisatud tabelisse staging.eco_epd_raw. run_id=81b00018-4879-47c9-8d36-af41bb02a403
 - Finished API load
 - Starting mart transformation: /app/scripts/01_transform.sql
@@ -59,5 +59,9 @@ Quality test results:
 - FAILED | eco_epd_no_empty_rows | failed_rows=27 | EPD kirjetel ei tohi puududa põhiandmed.
 - PASSED | eco_epd_gwp_control_within_tolerance | failed_rows=0 | GWP kontrollväärtus peab olema 0 või jääma 2% piiresse kogumõjust.
 - PASSED | eco_epd_mart_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks mart-rida.
+
+- Superset database exists
+- Superset dashboard import finished via /api/v1/dashboard/import/
+- Superset provisioning finished
 - PASSED | eco_epd_raw_has_rows | failed_rows=0 | Viimasel edukal laadimisel peab olema vähemalt üks staging-rida.
 ```

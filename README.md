@@ -182,7 +182,10 @@ Testide tulemused: Salvestatakse quality.test_results tabelisse ja tulemused kuv
 - Andmete kogumise skripte täiustamine, et suurem osa ECO Portalis saaks kätte rohkem infot.
 - Autentimise protsessi automatiseerimine. Praegu tuleb API juurdepääsuks kasutada ajutist tokenit, mis kehtib 24 tundi. Tulevikus võiks lahendus automaatselt taotleda uue tokeni ja uuendada seda vajaduse korral, võimaldades andmetoru käivitada ilma käsitsi sekkumiseta.
 - Ülejäänud EPD näitajate kaasamine. Hetkel on põhirõhk GWP-fossiilsel, kuid EPDde pealt saaks kätte kordades rohkem infot.
-- API omanikule tagasiside andmine esinevatest puudustest ja andmeloogika ebakõladest programmioperaatorite lõikes.
+- API omanikule tagasiside andmine esinevatest puudustest ja andmeloogika ebakõladest programmioperaatorite lõikes. Mõned näited:
+    - andmekategooriate puudulik käsitlus;
+    - ühikute varieeruvus, mis pole korrektselt kajastatud toote koguses;
+    - programmioperaatorite lõikes väljade valesti sisse lugemine.
 
 ## Meeskond
 

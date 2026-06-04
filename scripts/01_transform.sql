@@ -43,13 +43,16 @@ INSERT INTO mart.eco_epd (
     reference_year,
     valid_until,
     declaration_owner,
+    registration_authority,
     publication_date,
     quantity,
     ref_unit,
     gwp_total_a1a3,
     gwp_biogenic_a1a3,
     gwp_fossil_a1a3,
+    gwp_fossil_a1a3_assumed,
     gwp_luluc_a1a3,
+    htpnc_a1a3,
     gwp_control,
     fetched_at,
     source_url
@@ -63,6 +66,7 @@ SELECT
     n.reference_year,
     n.valid_until,
     n.declaration_owner,
+    n.registration_authority,
     n.publication_date,
 
     GREATEST(
@@ -75,12 +79,23 @@ SELECT
     n.gwp_total_a1a3,
     n.gwp_biogenic_a1a3_normalized AS gwp_biogenic_a1a3,
     n.gwp_fossil_a1a3_normalized AS gwp_fossil_a1a3,
+
+    CASE
+        WHEN n.ref_unit = 'kg'
+        AND n.gwp_fossil_a1a3_normalized > 0
+        AND n.gwp_fossil_a1a3_normalized < 10
+        THEN n.gwp_fossil_a1a3_normalized * 1000
+        ELSE n.gwp_fossil_a1a3_normalized
+    END AS gwp_fossil_a1a3_assumed,
+
     n.gwp_luluc_a1a3,
+    n.htpnc_a1a3,
 
     n.gwp_total_a1a3
         - n.gwp_biogenic_a1a3_normalized
         - n.gwp_fossil_a1a3_normalized
         - n.gwp_luluc_a1a3 AS gwp_control,
+
 
     n.fetched_at,
     n.source_url

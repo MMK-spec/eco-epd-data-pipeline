@@ -95,6 +95,7 @@ docker compose run --rm pipeline python scripts/run_pipeline.py run-all rebar --
 # - genereeriti .csv ja tabeli read, toimus transformatsioon
 # - 2 kvaliteeditesti põrusid ("Failed") ja teised said oleku "Passed"
 # - Superset dashboard import finished
+# - Full pipeline finished successfully
 
 # 5. Ava Superset
 #    http://localhost:8088  (kasutaja/parool: vt .env SUPERSET_ADMIN_USER/PASSWORD)

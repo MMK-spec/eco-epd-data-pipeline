@@ -9,7 +9,7 @@ Esialgne projekti fookus armatuurterasel.
 
 ## Mõõdikud
 
-1. Erinevate toodete või tootjate GWP-täieliku, GWP-fossiilse, GWP-biogeense, GWP-luluc (süsiniku jalajälje) väärtuste võrdlus ja keskmine.
+1. Erinevate toodete või tootjate süsiniku jalajälje väärtuste võrdlus ja keskmine.
 2. Kui palju esineb puudulikke või ebaloogilisi EPD andmeid. Vigaste kirjete arv kogu andmebaasist - GWP-total kontroll, GWP väärtuste loogilisuse kontroll.
     - Puuduvate väljadega kirjete summa
     - GWP-täielik = GWP-fossiilne + GWP-biogeenne + GWP-luluc (või erinevus <2%)

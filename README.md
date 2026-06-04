@@ -4,7 +4,7 @@ Projekt ehitab andmetöövoo. Loeb ECO Portal API-st ehitusmaterjalide keskkonna
 
 ## Äriküsimus
 
-Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides esitatud süsiniku jalajälje väärtused erinevate toodete ja tootjate vahel?
+Kuidas erinevad ehitusmaterjalide keskkonnadeklaratsioonides (EPD-des) esitatud süsiniku jalajälje väärtused (GWP-d) erinevate toodete ja tootjate vahel?
 Kas andmed on piisavalt täielikud ja võrreldavad automaatseks analüüsiks? 
 
 Esialgne projekti fookus armatuurterasel.

@@ -56,6 +56,7 @@ Sammud tehakse hosti terminalis ehk selles terminalis, kus saad kasutada docker 
 Vaja on:
 - Docker Desktop või muu Docker Compose keskkond;
 - ligipääs internetile, et ECO Portal API-st andmeid lugeda;
+- ECO Portali API Token;
 - vaba port 55432 PostgreSQL-i jaoks ja 8088 näidikulaua jaoks.
 Kui port on hõivatud, muuda .env failis väärtusi DB_PORT_HOST või DASHBOARD_PORT_HOST.
 
